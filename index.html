@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+    crossorigin="anonymous">
+
+</head>
+
+<body style="background-color: rgb(3, 180, 180)">
+  <div class="container" style="background-color: aquamarine; margin-top: 100px;">
+    <h1>Welcome to the crystal game!</h1>
+    <h3>Guess Number:
+      <span id="guess-number"></span>
+    </h3>
+    <h3>Your Number:
+      <span id="your-number">0</span>
+    </h3>
+    <div>
+      <button class="btn btn-primary crystal"><img src="https://www.thoughtco.com/thmb/TqQm3tRT4882EvcdDbqaogKDonI=/3609x2727/filters:fill(auto,1)/close-up-of-crystal-stone-glowing-in-darkroom-583919173-56f28e5d3df78ce5f83d7284.jpg" height="75px" width= "100px"></button>
+      <button class="btn btn-primary crystal"><img src="https://i.pinimg.com/originals/df/56/57/df5657b968ec7870fd7b58994a8c21d6.jpg" height="75px" width= "100px"></button>
+      <button class="btn btn-primary crystal"><img src="https://us.123rf.com/450wm/katisa/katisa1508/katisa150800012/44093689-3d-ruby-red-crystals-background-abstract-creative-wallpaper.jpg?ver=6" height="75px" width= "100px"></button>
+      <button class="btn btn-primary crystal"><img src="https://www.feelcrystals.com.au/wp-content/uploads/2014/10/LEmon-Quartz-Phantom-Specimen-2.jpg" height="75px" width= "100px"></button>
+    </div>
+    <br>
+    <div>
+      <button class="btn btn-primary reset">Reset!</button>
+    </div>
+    <h4>Wins
+      <span id="wins"></span>
+    </h4>
+    <br>
+    <h4>Loses
+      <span id="loses"></span>
+    </h4>
+  </div>
+
+
+
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+    crossorigin="anonymous"></script>
+  <script>
+    $(document).ready(function () {
+      // Global Variables
+      var randomNumber;
+      var accumulator;
+      var good = 1;
+      var bad = 1;
+      // DOM Elements
+      var $yourNumber = $("#your-number");
+      var $guessNumber = $("#guess-number");
+      var $wins = $("#wins");
+      var $loses = $("#loses");
+      // Initialize Game
+      initGame();
+
+
+      // Add Event Listener for each crystal click
+      $(".crystal").on("click", function () {
+        var val = $(this).data("value");
+
+        accumulator += val;
+        $yourNumber.text(accumulator);
+        if (accumulator > randomNumber) {
+          $loses.text(bad++);
+          initGame();
+          console.log("You lose!");
+        } else if (accumulator == randomNumber) {
+          $wins.text(good++);
+          initGame();
+          console.log("You win!");
+        }
+
+      });
+      $(".reset").on("click", function () {
+        initGame();
+
+      });
+
+      function initGame() {
+        randomNumber = genRandomNumber();
+        accumulator = 0;
+        $guessNumber.text(randomNumber);
+        $yourNumber.text(accumulator);
+        $(".crystal").each(function () {
+          $(this).attr("data-value", Math.ceil(Math.random() * 16));
+        });
+
+
+      }
+      function genRandomNumber() {
+        var val = "";
+        for (var i = 0; i < 3; i++) {
+          val += Math.ceil(Math.random() * 3);
+        }
+        return val;
+      }
+
+    });
+  </script>
+</body>
+
+</html>
